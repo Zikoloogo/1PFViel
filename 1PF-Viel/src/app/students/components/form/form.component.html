@@ -1,0 +1,27 @@
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Apellido</mat-label>
+    <input matInput formControlName="lastName" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Curso</mat-label>
+    <mat-select formControlName="curso">
+      <mat-option value="HTML">HTML</mat-option>
+      <mat-option value="JavaScript">JavaScript</mat-option>
+      <mat-option value="Angular">Angular</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Clase</mat-label>
+    <mat-select formControlName="clase">
+      <mat-option *ngFor="let c of [1, 2, 3, 4, 5]" [value]="c">{{ c }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-flat-button color="primary" [disabled]="formGroup.invalid">
+    Agregar Alumno
+  </button>
+</form>
