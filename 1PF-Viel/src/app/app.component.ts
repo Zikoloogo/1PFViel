@@ -28,8 +28,7 @@ constructor() {
   from(
     fetch('https://jsonplaceholder.typicode.com/posts').then((res)=>
     res.json())
-  )
- .pipe(map(posts => posts.filter((p: Post) => p.userId === 1)
+  ).pipe(map(posts => posts.filter((p: Post) => p.userId === 1 && p.id <= 2)
 ))
 }
 }
