@@ -2,12 +2,10 @@
     <mat-drawer #drawer class="sidenav" mode="over">
       <p appHighlighter>Colegio San Benito</p>
       @if (showFiller) {
-        <p>Alumnos</p>
-        <p>Curso</p>
-        <p>Clase</p>
+       {{posts | async | json}}
       }
       <button (click)="showFiller = !showFiller" mat-raised-button>
-        Mas Opciones
+        idUser1
       </button>
     </mat-drawer>
   

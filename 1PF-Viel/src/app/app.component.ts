@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup} from '@angular/forms';
 import { Student } from './students/interfaces/Student';
-import { forkJoin, from, Observable, of } from 'rxjs';
+import { forkJoin, from, map, Observable, of } from 'rxjs';
 
+interface Post{
+  id: number;
+  userId: number;
+  title: string;
+}
 
 @Component({
   selector: 'app-root',
@@ -10,24 +15,21 @@ import { forkJoin, from, Observable, of } from 'rxjs';
   standalone: false,
   styleUrl: './app.component.scss'
 })
+
 export class AppComponent {
   title = '1PF-Viel';
   showFiller = false;
 
-  posts!: Observable<any[]>;
-  post!: Observable<any>;
+  posts!: Observable<Post[]>;
+  post!: Observable<Post>;
 
 constructor() {
-  const observables =forkJoin([
+  this.posts =
   from(
     fetch('https://jsonplaceholder.typicode.com/posts').then((res)=>
     res.json())
-  )])
-  observables.subscribe({
-    next([posts, post]) {
-      this.posts = of(posts);
-      this.post = of(post);
-    }
-  })
+  )
+ .pipe(map(posts => posts.filter((p: Post) => p.userId === 1)
+))
 }
 }

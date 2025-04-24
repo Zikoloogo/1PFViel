@@ -13,6 +13,7 @@ import { APP_CONFIG, AppConfig } from '../../../core/injection-token';
 })
 export class FormComponent {
   formGroup: FormGroup;
+name: any;
 
   constructor(
     private fb: FormBuilder,
