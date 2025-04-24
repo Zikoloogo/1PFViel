@@ -18,3 +18,20 @@
     gap: 10px;
     padding: 15px;
   }
+
+  .sidenav-container {
+    width: 100%;
+    height: 100vh;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+  
+  .sidenav-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .sidenav {
+    padding: 20px;
+  }
+  

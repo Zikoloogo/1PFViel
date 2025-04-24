@@ -15,6 +15,7 @@ import { MatListModule } from '@angular/material/list';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
+
 @NgModule({
   declarations: [
     SidebarComponent,

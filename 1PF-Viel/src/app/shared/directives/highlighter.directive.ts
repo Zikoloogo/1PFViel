@@ -1,16 +1,15 @@
 import { Directive, ElementRef } from '@angular/core';
 
 @Directive({
+  standalone: false,
   selector: '[appHighlighter]',
-  standalone: false
+  
 })
 export class HighlighterDirective {
 
-  constructor(private element :ElementRef<HTMLElement>) {
-    this.modifyStyles()
-   }
+  constructor(private element :ElementRef<HTMLElement>) {this.modifyStyles()};
 
   modifyStyles() :void{
-    this.element.nativeElement.style.backgroundColor = 'sand';
+    this.element.nativeElement.style.color = 'red';
   }
 }
