@@ -1,25 +1,24 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
-import { StudentsModule } from './students/students.module';
-import { SharedModule } from './shared/shared.module';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { HighlighterDirective } from './shared/directives/highlighter.directive';
 
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+import { SharedModule } from './shared/shared.module';
+import { HomeComponent } from './featured/dashboard/home/home.component';
+import { DashboardModule } from './featured/dashboard/dashboard.module';
+import { AuthModule } from './featured/auth/auth.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HighlighterDirective,
-  ],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
-    StudentsModule,
+    AppRoutingModule,
     SharedModule,
-    MatToolbarModule, MatButtonModule, MatIconModule,
+    DashboardModule,
+    AuthModule,
   ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
