@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-
+import {MatDividerModule} from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,8 +17,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 
+
+
 @NgModule({
-  declarations: [SidebarComponent, DialogComponent],
+  declarations: [SidebarComponent, DialogComponent, ],
   imports: [
     CommonModule,
     MatSidenavModule,
@@ -34,6 +36,8 @@ import { RouterModule } from '@angular/router';
     MatDialogModule,
     MatCardModule,
     RouterModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   exports: [
     MatSidenavModule,
@@ -49,6 +53,7 @@ import { RouterModule } from '@angular/router';
     MatListModule,
     MatCardModule,
     RouterModule,
+    
   ],
 })
 export class SharedModule {}

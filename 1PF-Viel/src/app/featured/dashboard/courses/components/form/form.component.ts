@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../../../shared/components/dialog/dialog.component';
 import { CourseService } from '../../../../../core/services/course.service';
@@ -8,7 +8,7 @@ import { CourseService } from '../../../../../core/services/course.service';
   selector: 'course-form',
   standalone: false,
   templateUrl: './form.component.html',
-  styleUrl: './form.component.scss',
+  styleUrls: ['./form.component.scss'],
 })
 export class FormComponent {
   formGroup: FormGroup;
@@ -19,26 +19,30 @@ export class FormComponent {
     private matDialog: MatDialog
   ) {
     this.formGroup = this.fb.group({
-      title: [''],
-      description: [''],
+      title: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.required, Validators.maxLength(200)]],
     });
   }
 
   submit() {
-    this.matDialog
-      .open(DialogComponent)
-      .afterClosed()
-      .subscribe({
-        next: (confirmed: boolean) => {
-          if (confirmed) {
-            console.log(this.formGroup.value);
-            this.courseService.addCourse(this.formGroup.value);
-            this.formGroup.reset();
-          }
-        },
-        error: (error) => {
-          console.error('Error:', error);
-        },
-      });
+    if (this.formGroup.valid) {
+      this.matDialog
+        .open(DialogComponent)
+        .afterClosed()
+        .subscribe({
+          next: (confirmed: boolean) => {
+            if (confirmed) {
+              const course = this.formGroup.value;
+              this.courseService.addCourse(course);
+              this.formGroup.reset();
+            }
+          },
+          error: (error) => {
+            console.error('Error:', error);
+          },
+        });
+    } else {
+      this.formGroup.markAllAsTouched();
+    }
   }
 }

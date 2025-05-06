@@ -9,7 +9,7 @@ import { StudentsService } from '../../../../../core/services/students.service';
   styleUrl: './table.component.scss',
 })
 export class TableComponent implements OnInit {
-  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'course'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'course', 'AMB'];
   dataSource: Student[] = [];
 
   constructor(
@@ -31,4 +31,10 @@ export class TableComponent implements OnInit {
       })
       .catch((error) => console.log(error));
   }
+  
+  deleteRow(student: Student): void {
+    this.dataSource = this.dataSource.filter(s => s !== student);
+  }
+
+  
 }

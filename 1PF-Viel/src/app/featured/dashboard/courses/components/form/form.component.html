@@ -3,12 +3,27 @@
     <mat-form-field>
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" />
+      <mat-error *ngIf="formGroup.get('title')?.hasError('required')">
+        Title is required
+      </mat-error>
+      <mat-error *ngIf="formGroup.get('title')?.hasError('minlength')">
+        Title must be at least 3 characters long
+      </mat-error>
     </mat-form-field>
+
     <mat-form-field>
       <mat-label>Description</mat-label>
       <input matInput formControlName="description" />
+      <mat-error *ngIf="formGroup.get('description')?.hasError('required')">
+        Description is required
+      </mat-error>
+      <mat-error *ngIf="formGroup.get('description')?.hasError('maxlength')">
+        Description must be at most 200 characters long
+      </mat-error>
     </mat-form-field>
 
-    <button mat-flat-button type="submit">Add Course</button>
+    <button mat-flat-button type="submit" [disabled]="formGroup.invalid">
+      Add Course
+    </button>
   </div>
 </form>
