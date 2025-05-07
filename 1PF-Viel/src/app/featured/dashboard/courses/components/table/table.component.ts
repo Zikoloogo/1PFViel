@@ -28,9 +28,18 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.courseService.getCourses();
-    this.courseService.courses$.subscribe((data) => {
-      this.dataSource = data;
-    });
+    this.courseService.courses$.subscribe({
+      next: (data) => {
+        console.log(data);
+        this.dataSource = data;
+      },
+      error: (error) => {
+        console.error('Error fetching courses:', error);
+      }
+    })
+    // this.courseService.courses$.subscribe((data) => {
+    //   this.dataSource = data;
+    // });
   }
 
   addCourse(): void {
@@ -45,5 +54,13 @@ export class TableComponent implements OnInit {
 
   deleteRow(course: Course): void {
     this.dataSource = this.dataSource.filter((c) => c !== course);
+  }
+
+  deleteCourse(id: string) {
+    this.courseService.deleteCourse(id);
+  }
+
+  editCourse(id: string) {
+    this.courseService.setUpdateCourse(id);
   }
 }

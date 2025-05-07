@@ -42,7 +42,7 @@ export class FormComponent {
         tap((courses) => console.log(`Tap: ${courses}`)),
         filter((courses) => courses.length > 0),
         map((courses) => courses.map((course) => course.toUpperCase())),
-        map((courses) => courses.sort((a, b) => a.localeCompare(b))), // Sort alphabetically
+        map((courses) => courses.sort((a, b) => a.localeCompare(b))),
         tap((courses) => console.log(`Tap: ${courses}`))
       )
       .subscribe((courses) => {
