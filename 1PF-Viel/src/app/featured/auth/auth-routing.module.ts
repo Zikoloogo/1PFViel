@@ -7,10 +7,10 @@ const routes: Routes = [
     path: '',
     component: LoginComponent,
   },
-  {
-    path: '**',
-    redirectTo: '', // Redirige a la página de inicio si la ruta no coincide con ninguna de las anteriores
-  },
+  // {
+  //   path: '**',
+  //   redirectTo: '', // Redirige a la página de inicio si la ruta no coincide con ninguna de las anteriores
+  // },
 ];
 
 @NgModule({

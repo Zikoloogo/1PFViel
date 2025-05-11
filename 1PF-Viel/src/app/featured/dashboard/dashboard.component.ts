@@ -13,8 +13,13 @@ export class DashboardComponent {
   authUser: Observable<any>;
 
   constructor(private router: Router, private authService: AuthService) {
+    // Assign the auth user observable
     this.authUser = this.authService.authUser$;
-    console.log(this.authUser);
+
+    // Debug: Log the current user whenever it changes
+    this.authUser.subscribe((user) => {
+      console.log('Sidebar sees:', user);
+    });
   }
 
   logout() {

@@ -1,11 +1,11 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Injector } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentsService } from '../../../../../core/services/students.service';
 import { APP_CONFIG, AppConfig } from '../../../../../core/injection-token';
 import { DialogComponent } from '../../../../../shared/components/dialog/dialog.component';
 import { CourseService } from '../../../../../core/services/course.service';
-import { filter, map, Observable, tap } from 'rxjs';
+import { Observable, tap, filter, map } from 'rxjs';
 
 @Component({
   selector: 'student-form',
@@ -15,14 +15,16 @@ import { filter, map, Observable, tap } from 'rxjs';
 })
 export class FormComponent {
   formGroup: FormGroup;
-  courseNames!: string[];
+  courseNames: string[] = [];
   courseTitles: Observable<string[]>;
+
+  private courseService: CourseService;
 
   constructor(
     private fb: FormBuilder,
     private matDialog: MatDialog,
     private studentsService: StudentsService,
-    private courseService: CourseService,
+    private injector: Injector, // Injecting the Injector
     @Inject(APP_CONFIG) private config: AppConfig
   ) {
     console.log(config);
@@ -34,28 +36,31 @@ export class FormComponent {
       course: [''],
     });
 
+    // Lazy load CourseService to avoid circular dependency
+    this.courseService = this.injector.get(CourseService);
+
+    // Subscribe to course titles from CourseService
     this.courseTitles = this.courseService.coursesTitles$;
 
+    // Fetch courses titles once
     this.courseService.getCoursesTitles();
+
+    // Subscribe and transform course titles
     this.courseService.coursesTitles$
       .pipe(
         tap((courses) => console.log(`Tap: ${courses}`)),
         filter((courses) => courses.length > 0),
         map((courses) => courses.map((course) => course.toUpperCase())),
         map((courses) => courses.sort((a, b) => a.localeCompare(b))),
-        tap((courses) => console.log(`Tap: ${courses}`))
+        tap((courses) => console.log(`Transformed Courses: ${courses}`))
       )
       .subscribe((courses) => {
-        console.log(courses);
-
+        console.log('Final Courses:', courses);
         this.courseNames = courses;
       });
   }
 
-  getCoursesTitles() {
-    return this.courseService.coursesTitles$;
-  }
-
+  // Handle the form submission
   submit() {
     this.matDialog
       .open(DialogComponent)
@@ -63,13 +68,13 @@ export class FormComponent {
       .subscribe({
         next: (confirmed: boolean) => {
           if (confirmed) {
-            console.log(this.formGroup.value);
+            console.log('Form Values:', this.formGroup.value);
             this.studentsService.addStudentObs(this.formGroup.value);
-            this.formGroup.reset();
+            this.formGroup.reset(); // Reset form after submission
           }
         },
         error: (error) => {
-          console.error('Error:', error);
+          console.error('Error during submission:', error);
         },
       });
   }

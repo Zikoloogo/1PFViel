@@ -23,18 +23,25 @@ export class LoginComponent {
     });
   }
 
-  submit() {
-    if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
+submit() {
+  if (this.loginForm.valid) {
+    const { email, password } = this.loginForm.value;
 
-      const isLoggedIn = this.authService.login(email, password);
+    console.log('Form Submitted:', { email, password }); // Debugging the input values
 
-      if (!isLoggedIn) {
-        alert('Email o contraseña incorrectos');
-        return;
-      }
+    const isLoggedIn = this.authService.login(email, password);
 
-      this.router.navigate(['/dashboard']);
+    console.log('Login Status:', isLoggedIn); // Debugging the result of the login attempt
+
+    if (!isLoggedIn) {
+      alert('Email o contraseña incorrectos');
+      return;
     }
+
+    console.log('Navigating to dashboard...');
+    this.router.navigate(['/dashboard']);
+  } else {
+    console.log('Form is invalid:', this.loginForm.errors); // Debugging invalid form
   }
+}
 }

@@ -8,7 +8,9 @@ import { CoursesModule } from './courses/courses.module';
 import { StudentsModule } from './students/students.module';
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent,
+    
+  ],
   imports: [
     CommonModule,
     SharedModule,

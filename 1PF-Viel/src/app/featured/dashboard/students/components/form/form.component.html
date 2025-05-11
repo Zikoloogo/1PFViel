@@ -15,11 +15,9 @@
     <mat-form-field>
       <mat-label>Course</mat-label>
       <mat-select formControlName="course">
-        <mat-option
-          *ngFor="let course of courseNames"
-          [value]="course.toLowerCase()"
-          >{{ course }}</mat-option
-        >
+        <mat-option *ngFor="let course of courseNames" [value]="course.toLowerCase()">
+          {{ course }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
