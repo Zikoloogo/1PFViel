@@ -6,9 +6,10 @@ import { SharedModule } from '../../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { CoursesModule } from './courses/courses.module';
 import { StudentsModule } from './students/students.module';
+import { RobotComponent } from './robot/robot.component';
 
 @NgModule({
-  declarations: [DashboardComponent,
+  declarations: [DashboardComponent, RobotComponent,
     
   ],
   imports: [
