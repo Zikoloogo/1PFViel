@@ -5,6 +5,11 @@ import { DialogComponent } from '../../../../../shared/components/dialog/dialog.
 import { CourseService } from '../../../../../core/services/course.service';
 import { v4 as uuidv4 } from 'uuid';
 import { Course } from '../../interfaces/Course';
+import { Store } from '@ngrx/store';
+import { RootState } from '../../../../../core/store';
+import { Observable } from 'rxjs';
+import { selectIsLoading } from '../../store/courses.selectors';
+
 
 @Component({
   selector: 'course-form',
@@ -15,12 +20,16 @@ import { Course } from '../../interfaces/Course';
 export class FormComponent implements OnInit {
   formGroup: FormGroup;
   isEdit: boolean = false;
+   isLoading$: Observable<boolean>;
 
   constructor(
     private courseService: CourseService,
     private fb: FormBuilder,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private store: Store<RootState>
   ) {
+    this.isLoading$ = this.store.select(selectIsLoading);
+
     this.formGroup = this.fb.group({
       id: [''],
       title: ['', [Validators.required, Validators.minLength(3)]],

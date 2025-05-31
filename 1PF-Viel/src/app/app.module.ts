@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { provideStore, StoreModule } from '@ngrx/store';
+import { rootReducer } from './core/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
@@ -21,6 +24,9 @@ import { AuthModule } from './featured/auth/auth.module';
     SharedModule,
     DashboardModule,
     AuthModule, HttpClientModule
+     StoreModule.forRoot(rootReducer, {}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    EffectsModule.forRoot([]),
   ],
   providers: [provideHttpClient(withFetch())],
   bootstrap: [AppComponent],
