@@ -2,6 +2,17 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Course } from '../../interfaces/Course';
 import { CourseService } from '../../../../../core/services/course.service';
+import { Store } from '@ngrx/store';
+import { RootState } from '../../../../../core/store';
+import { Observable } from 'rxjs';
+import {
+  selectCourses,
+  selectError,
+  selectIsLoading,
+} from '../../store/courses.selectors';
+import { CoursesActions } from '../../store/courses.actions';
+import { CoursesState } from '../../store/courses.reducer';
+
 
 @Component({
   selector: 'course-table',
@@ -12,34 +23,40 @@ import { CourseService } from '../../../../../core/services/course.service';
 export class TableComponent implements OnInit {
   displayedColumns: string[] = ['title', 'description', 'see-more', 'delete'];
   dataSource: Course[] = [];
-  courseForm: FormGroup;
+  // courseForm: FormGroup;
+
+  courses$: Observable<Course[]>;
+  isLoading$: Observable<boolean>;
+  error$: Observable<any>;
+
 
   constructor(
-    private fb: FormBuilder,
     private courseService: CourseService,
-    @Inject('TITLE') private title: string
+    private store: Store<RootState>
+    // @Inject('TITLE') private title: string
   ) {
+    {
+    this.courses$ = this.store.select(selectCourses);
+    this.isLoading$ = this.store.select(selectIsLoading);
+    this.error$ = this.store.select(selectError);
 
-    this.courseForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(3)]],
-      description: ['', [Validators.required, Validators.maxLength(200)]],
-    });
-  }
+    // this.courseForm = this.fb.group({
+    //   title: ['', [Validators.required, Validators.minLength(3)]],
+    //   description: ['', [Validators.required, Validators.maxLength(200)]],
+    // });
+  }}
 
   ngOnInit(): void {
-    this.courseService.getCourses();
-    this.courseService.courses$.subscribe({
-      next: (data) => {
-        console.log(data);
-        this.dataSource = data;
+    this.store.dispatch(CoursesActions.loadCourses());
+    this.store.select(selectCourses).subscribe({
+      next: (courses) => {
+        console.log('Courses from store:', courses);
+        this.dataSource = courses;
       },
       error: (error) => {
-        console.error('Error fetching courses:', error);
-      }
-    })
-    // this.courseService.courses$.subscribe((data) => {
-    //   this.dataSource = data;
-    // });
+        console.error('Error fetching courses from store:', error);
+      },
+    });
   }
 
   addCourse(): void {

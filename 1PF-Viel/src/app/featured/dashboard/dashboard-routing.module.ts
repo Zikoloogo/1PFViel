@@ -28,6 +28,12 @@ const routes: Routes = [
     component: DetailsComponent,
   },
   {
+    path: 'counter',
+    loadChildren: () =>
+      import('./counter/counter.module').then((m) => m.CounterModule),
+  },
+
+  {
     path: '**',
     redirectTo: '',
   },

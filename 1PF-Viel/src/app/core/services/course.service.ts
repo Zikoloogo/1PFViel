@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, delay, Observable, Subject } from 'rxjs';
 import { Course } from '../../featured/dashboard/courses/interfaces/Course';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
@@ -58,15 +58,9 @@ updateCourse(course: Course) {
 
 getCourses() {
   this.coursesSubject.next(this._courses);
-  this.http
+  return this.http
     .get<Course[]>(`${environment.apiUrl}/courses`)
-    .subscribe((courses) => {
-      this._courses = courses;
-      this.coursesSubject.next(this._courses);
-      this.coursesTitlesSubject.next(
-        this._courses.map((course) => course.title)
-      );
-    });
+     .pipe(delay(2000));
 }
 
 getCoursesTitles(): void {

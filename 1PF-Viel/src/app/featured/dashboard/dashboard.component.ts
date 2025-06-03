@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { RootState } from '../../core/store';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -11,15 +14,17 @@ import { Observable } from 'rxjs';
 })
 export class DashboardComponent {
   authUser: Observable<any>;
+  authUser$: Observable<any>;
 
-  constructor(private router: Router, private authService: AuthService) {
-    // Assign the auth user observable
+
+constructor(
+    private router: Router,
+    private authService: AuthService,
+    private store: Store<RootState>
+  ) {
     this.authUser = this.authService.authUser$;
-
-    // Debug: Log the current user whenever it changes
-    this.authUser.subscribe((user) => {
-      console.log('Sidebar sees:', user);
-    });
+    this.authUser$ = this.store.select((state) => state.auth.authUser);
+    console.log(this.authUser);
   }
 
   logout() {

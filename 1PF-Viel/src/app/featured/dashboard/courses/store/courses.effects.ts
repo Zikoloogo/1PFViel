@@ -1,26 +1,36 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap } from 'rxjs/operators';
-import { Observable, EMPTY, of } from 'rxjs';
-import { CoursesActions } from './courses.actions';
 
+import { CoursesActions } from './courses.actions';
+import { catchError, concatMap, map } from 'rxjs';
+import { CourseService } from '../../../../core/services/course.service';
 
 @Injectable()
 export class CoursesEffects {
-
   loadCoursess$ = createEffect(() => {
-    return this.actions$.pipe(
+    console.log(this.actions$);
 
-      ofType(CoursesActions.loadCoursess),
+    return this.actions$.pipe(
+      ofType(CoursesActions.loadCourses),
       concatMap(() =>
-        /** An EMPTY observable only emits completion. Replace with your own observable API request */
-        EMPTY.pipe(
-          map(data => CoursesActions.loadCoursessSuccess({ data })),
-          catchError(error => of(CoursesActions.loadCoursessFailure({ error }))))
+        this.coursesService.getCourses().pipe(
+          map((courses) => {
+            console.log('loadCourses', courses);
+            return CoursesActions.loadCoursesSuccess({ courses });
+          }),
+          catchError((error) => {
+            console.error('Error loading courses:', error);
+            return [CoursesActions.loadCoursesFailure({ error })];
+          })
+        )
       )
     );
   });
 
-
-  constructor(private actions$: Actions) {}
+  constructor(
+    private actions$: Actions,
+    private coursesService: CourseService
+  ) {
+    this.actions$ = inject(Actions);
+  }
 }

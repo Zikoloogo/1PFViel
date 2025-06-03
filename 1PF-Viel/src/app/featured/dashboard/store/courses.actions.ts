@@ -1,7 +1,7 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-import { Course } from '../interfaces/Course';
-import { Courses } from './courses.model';
+import { Course } from '../courses/interfaces/Course';
+
 
 export const CoursesActions = createActionGroup({
   source: 'Courses/API',

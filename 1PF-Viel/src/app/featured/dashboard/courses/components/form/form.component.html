@@ -22,8 +22,12 @@
       </mat-error>
     </mat-form-field>
 
-    <button mat-flat-button type="submit" [disabled]="formGroup.invalid">
-      Add Course
+    <button
+      mat-flat-button
+      type="submit"
+      [disabled]="(isLoading$ | async) === true"
+    >
+      {{ isEdit ? "Edit" : "Create" }} Course
     </button>
   </div>
 </form>
