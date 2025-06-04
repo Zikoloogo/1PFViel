@@ -5,13 +5,9 @@ import { CourseService } from '../../../../../core/services/course.service';
 import { Store } from '@ngrx/store';
 import { RootState } from '../../../../../core/store';
 import { Observable } from 'rxjs';
-import {
-  selectCourses,
-  selectError,
-  selectIsLoading,
-} from '../../store/courses.selectors';
 import { CoursesActions } from '../../store/courses.actions';
 import { CoursesState } from '../../store/courses.reducer';
+import { selectIsLoading, selectError, selectCourses } from '../../store/courses.selectors';
 
 
 @Component({
@@ -59,15 +55,15 @@ export class TableComponent implements OnInit {
     });
   }
 
-  addCourse(): void {
-    if (this.courseForm.valid) {
-      const newCourse: Course = this.courseForm.value;
-      this.dataSource = [...this.dataSource, newCourse];
-      this.courseForm.reset();
-    } else {
-      alert('Please fix the form errors before submitting.');
-    }
-  }
+  // addCourse(): void {
+  //   if (this.courseForm.valid) {
+  //     const newCourse: Course = this.courseForm.value;
+  //     this.dataSource = [...this.dataSource, newCourse];
+  //     this.courseForm.reset();
+  //   } else {
+  //     alert('Please fix the form errors before submitting.');
+  //   }
+  // }
 
   deleteRow(course: Course): void {
     this.dataSource = this.dataSource.filter((c) => c !== course);

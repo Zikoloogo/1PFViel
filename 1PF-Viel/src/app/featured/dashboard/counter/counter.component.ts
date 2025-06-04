@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootState } from '../../../core/store';
 import { Observable } from 'rxjs';
-import { selectCountValue } from '../../../core/store/counter/counter.selectors';
+import { selectCountValue } from '../../../core/store/counter/counter.selector';
 import {
   decrement,
   increment,
