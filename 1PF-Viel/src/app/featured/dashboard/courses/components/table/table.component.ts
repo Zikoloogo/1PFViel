@@ -7,8 +7,13 @@ import { RootState } from '../../../../../core/store';
 import { Observable } from 'rxjs';
 import { CoursesActions } from '../../store/courses.actions';
 import { CoursesState } from '../../store/courses.reducer';
-import { selectIsLoading, selectError, selectCourses } from '../../store/courses.selectors';
-
+import {
+  selectIsLoading,
+  selectError,
+  selectCourses,
+} from '../../store/courses.selectors';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../../../../shared/components/dialog/dialog.component';
 
 @Component({
   selector: 'course-table',
@@ -25,22 +30,24 @@ export class TableComponent implements OnInit {
   isLoading$: Observable<boolean>;
   error$: Observable<any>;
 
-
   constructor(
     private courseService: CourseService,
-    private store: Store<RootState>
-    // @Inject('TITLE') private title: string
-  ) {
-    {
-    this.courses$ = this.store.select(selectCourses);
-    this.isLoading$ = this.store.select(selectIsLoading);
-    this.error$ = this.store.select(selectError);
+    private store: Store<RootState>,
+    private MatDialog: MatDialog
+  ) // @Inject('TITLE') private title: string
 
-    // this.courseForm = this.fb.group({
-    //   title: ['', [Validators.required, Validators.minLength(3)]],
-    //   description: ['', [Validators.required, Validators.maxLength(200)]],
-    // });
-  }}
+  {
+    {
+      this.courses$ = this.store.select(selectCourses);
+      this.isLoading$ = this.store.select(selectIsLoading);
+      this.error$ = this.store.select(selectError);
+
+      // this.courseForm = this.fb.group({
+      //   title: ['', [Validators.required, Validators.minLength(3)]],
+      //   description: ['', [Validators.required, Validators.maxLength(200)]],
+      // });
+    }
+  }
 
   ngOnInit(): void {
     this.store.dispatch(CoursesActions.loadCourses());
@@ -70,7 +77,18 @@ export class TableComponent implements OnInit {
   }
 
   deleteCourse(id: string) {
-    this.courseService.deleteCourse(id);
+    this.MatDialog
+    .open(DialogComponent).afterClosed()
+    .subscribe({
+      next: (confirmed: boolean) => {
+        if (confirmed) {
+          this.store.dispatch(CoursesActions.deleteCourse({ id }));
+        }
+      },
+      error: (error) => {
+        console.error( 'Error opening dialog:', error);
+      },
+    })
   }
 
   editCourse(id: string) {

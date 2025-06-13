@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import { RootState } from '../../../../../core/store';
 import { Observable } from 'rxjs';
 import { selectIsLoading } from '../../store/courses.selectors';
-
+import { CoursesActions } from '../../store/courses.actions';
 
 @Component({
   selector: 'course-form',
@@ -21,7 +21,6 @@ export class FormComponent implements OnInit {
   formGroup: FormGroup;
   isEdit: boolean = false;
   isLoading$: Observable<boolean>;
-
 
   constructor(
     private courseService: CourseService,
@@ -67,7 +66,10 @@ export class FormComponent implements OnInit {
               if (this.isEdit) {
                 this.courseService.updateCourse(this.formGroup.value);
               } else {
-                this.courseService.addCourse(this.formGroup.value);
+                // this.courseService.addCourse(this.formGroup.value);
+                this.store.dispatch(
+                  CoursesActions.addCourse({ course: this.formGroup.value })
+                );
               }
               this.formGroup.reset();
               this.isEdit = false;
@@ -104,7 +106,7 @@ export class FormComponent implements OnInit {
 //     private courseService: CourseService,
 //     private fb: FormBuilder,
 //     private matDialog: MatDialog
-//   ) 
+//   )
 //   {
 //     this.formGroup = this.fb.group({
 //       id: [''],
@@ -155,7 +157,6 @@ export class FormComponent implements OnInit {
 //     });
 // }
 
-
 // //   submit() {
 // //     if (this.formGroup.valid) {
 // //       this.matDialog
@@ -177,4 +178,3 @@ export class FormComponent implements OnInit {
 // //       this.formGroup.markAllAsTouched();
 // //     }
 // //   }
-
