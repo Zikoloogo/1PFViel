@@ -16,7 +16,6 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
     loadChildren: () =>
       import('./featured/dashboard/dashboard.module').then(
         (m) => m.DashboardModule
@@ -28,6 +27,7 @@ const routes: Routes = [
     redirectTo: 'auth',
   },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

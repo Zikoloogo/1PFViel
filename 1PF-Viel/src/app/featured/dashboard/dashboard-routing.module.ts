@@ -8,34 +8,17 @@ import { DashboardComponent } from './dashboard.component';
 import { adminGuard } from '../../core/guards/admin.guard';
 
 const routes: Routes = [
-  
   {
     path: '',
-    pathMatch: 'full',
-    component: HomeComponent,
-  },
-  {
-    path: 'students',
-    component: StudentsComponent,
-    canActivate: [adminGuard],
-  },
-  {
-    path: 'courses',
-    component: CoursesComponent,
-  },
-  {
-    path: 'courses/:title',
-    component: DetailsComponent,
-  },
-  {
-    path: 'counter',
-    loadChildren: () =>
-      import('./counter/counter.module').then((m) => m.CounterModule),
-  },
-
-  {
-    path: '**',
-    redirectTo: '',
+    component: DashboardComponent,
+    children: [
+      { path: '', component: HomeComponent },
+      { path: 'students', component: StudentsComponent, canActivate: [adminGuard] },
+      { path: 'courses', component: CoursesComponent },
+      { path: 'courses/:title', component: DetailsComponent },
+      { path: 'counter', loadChildren: () => import('./counter/counter.module').then(m => m.CounterModule) },
+      { path: '**', redirectTo: '' },
+    ],
   },
 ];
 

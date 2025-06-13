@@ -10,7 +10,7 @@ import { RootState } from '../../core/store';
   selector: 'app-dashboard',
   standalone: false,
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
   authUser: Observable<any>;

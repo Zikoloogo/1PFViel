@@ -9,11 +9,12 @@ describe('CoursesEffects', () => {
   let effects: CoursesEffects;
 
   beforeEach(() => {
+    actions$ = new Observable(); 
     TestBed.configureTestingModule({
       providers: [
         CoursesEffects,
-        provideMockActions(() => actions$)
-      ]
+        provideMockActions(() => actions$),
+      ],
     });
 
     effects = TestBed.inject(CoursesEffects);
@@ -23,3 +24,4 @@ describe('CoursesEffects', () => {
     expect(effects).toBeTruthy();
   });
 });
+
