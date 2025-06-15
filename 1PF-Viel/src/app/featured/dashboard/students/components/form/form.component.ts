@@ -15,7 +15,7 @@ import { Observable, tap, filter, map } from 'rxjs';
 })
 export class FormComponent {
   formGroup: FormGroup;
-  courseNames: string[] = [];
+  courseNames: string[] = ['Angular', 'React'];
   courseTitles: Observable<string[]>;
 
   private courseService: CourseService;
