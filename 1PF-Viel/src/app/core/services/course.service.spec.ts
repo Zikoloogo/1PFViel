@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { CourseService } from './course.service';
+import { CourseService } from '../../featured/dashboard/courses/store/course.service';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { Course } from '../../featured/dashboard/courses/interfaces/Course';

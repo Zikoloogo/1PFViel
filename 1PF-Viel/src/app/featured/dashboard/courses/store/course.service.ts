@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, delay, Observable, Subject } from 'rxjs';
-import { Course } from '../../featured/dashboard/courses/interfaces/Course';
+import { Course } from '../interfaces/Course';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',

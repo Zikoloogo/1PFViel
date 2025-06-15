@@ -1,4 +1,4 @@
-<h1>HOHOHO</h1>>
+
 <mat-drawer-container class="container" autosize>
   <mat-drawer #drawer class="sidenav" mode="side">
     <h2>SideBar</h2>
@@ -7,7 +7,7 @@
       <a
       mat-list-item
       routerLink="/dashboard/students"
-      *ngIf="(authUser$ | async)?.role === 'admin'"
+      
     >
       Students
     </a>

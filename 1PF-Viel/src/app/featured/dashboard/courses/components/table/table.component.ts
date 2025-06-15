@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Course } from '../../interfaces/Course';
-import { CourseService } from '../../../../../core/services/course.service';
+import { CourseService } from '../../store/course.service';
 import { Store } from '@ngrx/store';
 import { RootState } from '../../../../../core/store';
 import { Observable } from 'rxjs';

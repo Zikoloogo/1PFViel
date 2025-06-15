@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { StudentsService } from '../../../../../core/services/students.service';
 import { APP_CONFIG, AppConfig } from '../../../../../core/injection-token';
 import { DialogComponent } from '../../../../../shared/components/dialog/dialog.component';
-import { CourseService } from '../../../../../core/services/course.service';
+import { CourseService } from '../../../courses/store/course.service';
 import { Observable, tap, filter, map } from 'rxjs';
 
 @Component({

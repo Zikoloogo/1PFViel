@@ -1,36 +1,53 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-
+import { catchError, concatMap, map } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { CoursesActions } from './courses.actions';
-import { catchError, concatMap, map } from 'rxjs';
-import { CourseService } from '../../../../core/services/course.service';
+import { CourseService } from './course.service';
 
 @Injectable()
 export class CoursesEffects {
-  loadCoursess$ = createEffect(() => {
-    console.log(this.actions$);
+  private actions$ = inject(Actions);
+  private coursesService = inject(CourseService);
 
-    return this.actions$.pipe(
+  loadCourses$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(CoursesActions.loadCourses),
       concatMap(() =>
         this.coursesService.getCourses().pipe(
-          map((courses) => {
-            console.log('loadCourses', courses);
-            return CoursesActions.loadCoursesSuccess({ courses });
-          }),
-          catchError((error) => {
-            console.error('Error loading courses:', error);
-            return [CoursesActions.loadCoursesFailure({ error })];
-          })
+          map(courses => CoursesActions.loadCoursesSuccess({ courses })),
+          catchError(error => of(CoursesActions.loadCoursesFailure({ error })))
         )
       )
-    );
-  });
+    )
+  );
 
-  constructor(
-    private actions$: Actions,
-    private coursesService: CourseService
-  ) {
-    this.actions$ = inject(Actions);
+  addCourse$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CoursesActions.addCourse),
+      concatMap(action =>
+        this.coursesService.addCourse(action.course).pipe(
+          map(course => CoursesActions.addCourseSuccess({ course })),
+          catchError(error => of(CoursesActions.addCourseFailure({ error })))
+        )
+      )
+    )
+  );
+
+  deleteCourse$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CoursesActions.deleteCourse),
+      concatMap(({ id }) =>
+        this.coursesService.deleteCourse(id).pipe(
+          map(() => CoursesActions.deleteCourseSuccess({ id })),
+          catchError(error => of(CoursesActions.deleteCourseFailure({ error })))
+        )
+      )
+    )
+  );
+
+  constructor() {
+    // Optional: Log all dispatched actions for debugging
+    this.actions$.subscribe(action => console.log('Action dispatched:', action));
   }
 }

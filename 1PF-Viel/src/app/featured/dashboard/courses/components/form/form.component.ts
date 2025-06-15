@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../../../shared/components/dialog/dialog.component';
-import { CourseService } from '../../../../../core/services/course.service';
+import { CourseService } from '../../store/course.service';
 import { v4 as uuidv4 } from 'uuid';
 import { Course } from '../../interfaces/Course';
 import { Store } from '@ngrx/store';
