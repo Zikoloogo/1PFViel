@@ -21,11 +21,6 @@
   ],
   "courses": [
     {
-      "id": "a1b2c3d4-e5f6-7g8h-9i0j-1k2l3m4n5o6p",
-      "title": "Angular 19",
-      "description": "Angular, el mejor framework de Frontend"
-    },
-    {
       "id": "b2c3d4e5-f6g7-h8i9-j0k1-l2m3n4o5p6q7",
       "title": "React 19",
       "description": "React es una librería para construir interfaces de usuario"
@@ -49,6 +44,11 @@
       "id": "5f5db080-aaeb-454a-8c53-2e39ddaaa9f4",
       "title": "Node js",
       "description": "Curso de Node.js con TypeScript y Express"
+    },
+    {
+      "id": "d397be67-2758-4ca1-b9da-31ec011368fa",
+      "title": "angular",
+      "description": "funciona?"
     }
   ],
   "students": [

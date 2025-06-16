@@ -16,6 +16,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 
@@ -37,7 +38,7 @@ import { RouterModule } from '@angular/router';
     MatCardModule,
     RouterModule,
     MatButtonModule,
-    MatIconModule,
+    MatIconModule, MatProgressSpinnerModule,
   ],
   exports: [
     MatSidenavModule,
@@ -52,7 +53,7 @@ import { RouterModule } from '@angular/router';
     SidebarComponent,
     MatListModule,
     MatCardModule,
-    RouterModule,
+    RouterModule, MatProgressSpinnerModule,
     
   ],
 })

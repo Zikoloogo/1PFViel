@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideStore, StoreModule } from '@ngrx/store';
 import { rootReducer } from './core/store';
@@ -16,6 +16,7 @@ import { HomeComponent } from './featured/dashboard/home/home.component';
 import { DashboardModule } from './featured/dashboard/dashboard.module';
 import { AuthModule } from './featured/auth/auth.module';
 
+
 @NgModule({
   declarations: [AppComponent, HomeComponent],
   imports: [
@@ -23,10 +24,7 @@ import { AuthModule } from './featured/auth/auth.module';
     AppRoutingModule,
     SharedModule,
     DashboardModule,
-    AuthModule, HttpClientModule
-     StoreModule.forRoot(rootReducer, {}),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([]),
+    AuthModule, HttpClientModule, StoreModule.forRoot({}, {}), StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }), EffectsModule.forRoot([])
   ],
   providers: [provideHttpClient(withFetch())],
   bootstrap: [AppComponent],

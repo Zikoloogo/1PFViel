@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, delay } from 'rxjs';
-import { Course } from '../../featured/dashboard/courses/interfaces/Course';
+import { BehaviorSubject, delay, Observable, Subject } from 'rxjs';
+import { Course } from '../interfaces/Course';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -56,54 +56,24 @@ updateCourse(course: Course) {
     });
 }
 
- getCourses() {
-    this.coursesSubject.next(this._courses);
-    this.http
-    return this.http
-      .get<Course[]>(`${environment.apiUrl}/courses`)
-      .subscribe((courses) => {
-        this._courses = courses;
-        this.coursesSubject.next(this._courses);
-        this.coursesTitlesSubject.next(
-          this._courses.map((course) => course.title)
-        );
-      });
-      .pipe(delay(2000));
-  }
+getCourses() {
+  this.coursesSubject.next(this._courses);
+  return this.http
+    .get<Course[]>(`${environment.apiUrl}/courses`)
+     .pipe(delay(2000));
+}
 
 getCoursesTitles(): void {
   const names = this._courses.map((course) => course.title);
   this.coursesTitlesSubject.next(names);
 }
 
-addCourse(course: Course): void {
-  this.http.post<Course>(`${environment.apiUrl}/courses`, course).subscribe({
-    next: (course) => {
-      this._courses = [...this._courses, course];
-      this.coursesSubject.next(this._courses);
-      this.coursesTitlesSubject.next(
-        this._courses.map((course) => course.title)
-      );
-    },
-    error: (error) => {
-      console.error('Error adding course:', error);
-    },
-  });
+addCourse(course: Course): Observable<Course> {
+  return this.http.post<Course>(`${environment.apiUrl}/courses`, course)
 }
 
 deleteCourse(id: string) {
-  this.http.delete<Course>(`${environment.apiUrl}/courses/${id}`).subscribe({
-    next: (course) => {
-      this._courses = this._courses.filter((course) => course.id !== id);
-      this.coursesSubject.next(this._courses);
-      this.coursesTitlesSubject.next(
-        this._courses.map((course) => course.title)
-      );
-    },
-    error: (error) => {
-      console.error('Error deleting course:', error);
-    },
-  });
+  return this.http.delete<Course>(`${environment.apiUrl}/courses/${id}`)
 }
 
 getByTitle(title: string) {
